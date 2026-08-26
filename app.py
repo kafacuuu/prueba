@@ -21,10 +21,11 @@ def process_vertical():
     file.save(input_path)
 
     try:
-        # Comando de FFmpeg para pasar de horizontal a vertical (9:16)
+        # FFmpeg optimizado con preset ultrafast para evitar timeouts y 502 en Render
         command = [
-            'ffmpeg', '-i', input_path,
+            'ffmpeg', '-y', '-i', input_path,
             '-vf', 'scale=1080:1920:force_original_aspect_ratio=increase,crop=1080:1920',
+            '-c:v', 'libx264', '-preset', 'ultrafast', '-crf', '28',
             '-c:a', 'copy',
             output_path
         ]
